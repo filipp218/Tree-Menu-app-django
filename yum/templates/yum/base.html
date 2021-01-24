@@ -1,5 +1,5 @@
-{% load static %}
 {% load main_menu %}
+  {% main_tree %}
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +8,6 @@
   <title>test</title>
  </head>
  <body>
-   {{ main_tree as menu }}
    <ul>
    {% for one in menu %}
      <li>
