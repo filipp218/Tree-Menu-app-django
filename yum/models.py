@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 
-class menu_item(models.Model):
+class MenuItem(models.Model):
     title = models.CharField("Название" , max_length = 150, blank=False)
     url = models.SlugField(max_length=150, unique=True)
     name = models.CharField("Описание",  max_length = 150, blank=False, null=True)

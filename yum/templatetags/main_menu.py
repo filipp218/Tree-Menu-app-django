@@ -1,10 +1,10 @@
 from django import template
-from yum.models import menu_item
+from yum.models import MenuItem
 
 
 register = template.Library()
 
-@register.inclusion_tag('yum/base.html')
+@register.inclusion_tag('yum/menu.html')
 def main_tree():
-        menu = menu_item.objects.filter(name = 'header')
-        return {'menu': menu}
+    menu = MenuItem.objects.all()
+    return {'menu': menu}
