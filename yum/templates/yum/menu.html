@@ -1,1 +1,13 @@
-Poshel na huy
+<ul>
+{% for item in menu %}
+  <li> {{item.title}}
+  {% if item.children %}
+    <ul>
+        {% for child in item.children %}
+           <li> {{child}} </li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  </li>
+{% endfor %}
+</ul>
