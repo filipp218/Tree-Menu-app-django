@@ -4,13 +4,17 @@ from yum.models import MenuItem
 
 register = template.Library()
 
-def into_tree(parent, children_by_parent): #функция, которая берёт родителя и смотрит  есть ли у него дети, если есть она идёт в глубь и спрашивает у следующего сына.
+def into_tree(parent, children_by_parent,code): #функция, которая берёт родителя и смотрит  есть ли у него дети, если есть она идёт в глубь и спрашивает у следующего сына.
     if parent in children_by_parent:
-        parent.children = children_by_parent[parent]
+        code += ['<ul>']
         for m in children_by_parent[parent]:
-            into_tree(m, children_by_parent)
+            code += ['<li>', m.title]
+            into_tree(m, children_by_parent, code)
+            code += ['</li>']
+        code += ['</ul>']
     else:
-        return parent
+        return
+
 
 @register.inclusion_tag('yum/menu.html')
 def main_tree(name):
@@ -23,9 +27,11 @@ def main_tree(name):
             children_by_parent[m.parent].append(m)
 
     result = children_by_parent[None]
+    code = ['<ul>']
     for m in result:
-        into_tree(m, children_by_parent)
-    return {'menu': result}
-    
-    start_code = ['{% if item.children %}','<ul>','{% for child in item.children %}','<li> {{child}} </li>']
-    end_code = ['{% endfor %}','</ul>']
+        code += ['<li>', m.title]
+        into_tree(m, children_by_parent, code)
+        code +=  ['</li>']
+    code += ['</ul>']
+    print(code)
+    return {'menu': code}
