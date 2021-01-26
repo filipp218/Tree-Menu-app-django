@@ -33,5 +33,5 @@ def main_tree(name):
         into_tree(m, children_by_parent, code)
         code +=  ['</li>']
     code += ['</ul>']
-    print(code)
-    return {'menu': code}
+    p = {'a':code}
+    return {'menu': p}
