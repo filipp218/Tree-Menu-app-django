@@ -6,11 +6,11 @@ register = template.Library()
 
 def into_tree(parent, children_by_parent): #функция, которая берёт родителя и смотрит  есть ли у него дети, если есть она идёт в глубь и спрашивает у следующего сына.
     if parent in children_by_parent:
+        parent.children = children_by_parent[parent]
         for m in children_by_parent[parent]:
-            m.children = children_by_parent[m]
             into_tree(m, children_by_parent)
     else:
-        return
+        return parent
 
 @register.inclusion_tag('yum/menu.html')
 def main_tree(name):
@@ -25,7 +25,7 @@ def main_tree(name):
     result = children_by_parent[None]
     for m in result:
         into_tree(m, children_by_parent)
-
     return {'menu': result}
+    
     start_code = ['{% if item.children %}','<ul>','{% for child in item.children %}','<li> {{child}} </li>']
     end_code = ['{% endfor %}','</ul>']
