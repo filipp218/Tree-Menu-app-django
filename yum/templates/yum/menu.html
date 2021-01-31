@@ -1,6 +1,4 @@
 
 {% autoescape off %}
-{%for i in menu.a%}
-  {{i}}
-{%endfor%}
+    {{ menu|join:"" }}
 {% endautoescape %}
